@@ -1,0 +1,1 @@
+fcrackzip -u -D -p <dictionary> <file>.zip

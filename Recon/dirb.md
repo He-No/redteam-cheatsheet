@@ -1,0 +1,1 @@
+dirb http://<ip> /usr/share/wordlists/dirb/common.txt

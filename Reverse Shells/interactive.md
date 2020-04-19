@@ -1,0 +1,15 @@
+When you get a reverse shell on a linux box, you want a nice, interactive shell. We follow these steps to make this reality:
+
+Step 1: python -c 'import pty;pty.spawn("/bin/bash")'	or python3 -c 'import pty;pty.spawn("/bin/bash")'
+Step 2: do 'ctrl+z' to stop current shell and return to your own box 
+Step 3: do 'stty raw -echo'
+Step 4: type 'fg' to bring the stopped job (the reverse shell) back to foreground
+Step 5: do 'export TERM=screen'
+Step 6: you should have a nice, interactive shell now on the victim box
+Step 7: to get back to normal input, either restart the terminal session or do 'stty cooked sane'
+
+On target box, you can do this too at the end: 
+$ reset
+$ export SHELL=bash
+$ export TERM=xterm-256color
+$ stty rows <num> columns <cols>

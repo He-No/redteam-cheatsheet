@@ -1,0 +1,1 @@
+pdfcrack -f '<file>.pdf' -w <dictionary>
